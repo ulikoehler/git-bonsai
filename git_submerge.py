@@ -484,8 +484,9 @@ def main_tui(stdscr, base_dir):
 # --- ENTRY SYSTEM ---
 show_all_flag = False
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="GitBonsai: TUI for deeply nested submodules.")
+def main():
+    global show_all_flag
+    parser = argparse.ArgumentParser(description="GitSubmerge: TUI for deeply nested submodules.")
     parser.add_argument("directory", nargs="?", default=".", help="Base path directory of the Git Superproject")
     parser.add_argument("-u", "--update", action="store_true", help="Runs top level submodule init update chains beforehand")
     parser.add_argument("-a", "--all", action="store_true", help="Display all submodules instead of omitting clean ones")
@@ -493,7 +494,7 @@ if __name__ == "__main__":
 
     target_dir = os.path.abspath(args.directory)
     show_all_flag = args.all
-    
+
     if not os.path.isdir(os.path.join(target_dir, ".git")):
         print(f"Critical Error: Execution directory '{target_dir}' is not an initialized Git hub repository.")
         sys.exit(1)
@@ -506,3 +507,6 @@ if __name__ == "__main__":
         curses.wrapper(main_tui, target_dir)
     except KeyboardInterrupt:
         pass
+
+if __name__ == "__main__":
+    main()
